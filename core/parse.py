@@ -18,21 +18,12 @@ class HttpRequest:
         # Chia cách dòng của Header        
         header_Lines = Header_Request.split("\r\n")
         # Tách dòng đầu của Header lấy method, path, version
-        request_Line = header_Lines[0].split(" ")
-        request_values = [self.method, self.path, self.version]
-        if len(request_Line == len(request_values)): # Nếu request Line đủ cho 3 giá trị method, path, version
-            request_values = request_Line
-        else:
-            # Gán các giá trị có từ request Line vào
-            index = 0
-            for i in range(len(request_Line)):
-                request_values[i] = request_Line[i]
-                index += 1
-            # Còn thiếu giá trị nào thì gán "UNKNOWN"
-            while (index < len(request_values)):
-                request_values[index] = "UNKNOWN"
-                index += 1
-        self.method, self.path, self.version = request_Line.split(" ")
+        request_Line = header_Lines[0].split(" ") 
+        parts_request = request_Line[:3] # Copy 3 phần tử của request Line đề phòng gửi dư
+        while len(parts_request) < 3: # Thêm Unknown vào nếu thiếu
+            parts_request.append("UNKNOWN")
+        self.method, self.path, self.version = parts_request
+      
         # Tách key và value của từng dòng Headers
         for i in range(1,len(header_Lines)):
             if not header_Lines[i].strip():
