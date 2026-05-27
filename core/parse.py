@@ -16,18 +16,26 @@ class HttpRequest:
             Header_Request = raw_data_string[:pos]
             self.body = raw_data_string[pos+4:]
         # Chia cách dòng của Header        
-        header_Line = Header_Request.split("\r\n")
+        header_Lines = Header_Request.split("\r\n")
         # Tách dòng đầu của Header lấy method, path, version
-        request_Line = header_Line[0]
-        self.method, self.path, self.version = request_Line.split(" ")
+        request_Line = header_Lines[0].split(" ") 
+        parts_request = request_Line[:3] # Copy 3 phần tử của request Line đề phòng gửi dư
+        while len(parts_request) < 3: # Thêm Unknown vào nếu thiếu
+            parts_request.append("UNKNOWN")
+        self.method, self.path, self.version = parts_request
+      
         # Tách key và value của từng dòng Headers
-        for i in range(1,len(header_Line)):
-            pos_split = header_Line[i].find(":")
-            key = header_Line[i][:pos_split].lower().strip()
-            value = header_Line[i][pos_split + 1:].strip()
+        for i in range(1,len(header_Lines)):
+            if not header_Lines[i].strip():
+                continue
+            pos_split = header_Lines[i].find(":")
+            if pos_split == -1:
+                continue
+            key = header_Lines[i][:pos_split].lower().strip()
+            value = header_Lines[i][pos_split + 1:].strip()
             self.headers[key] = value
 
-    def print_paresed_request(self):
+    def print_parsed_request(self):
         print("\n--- [PRISM PARSED LOG] ---")
         print(f"Method : {self.method}")
         print(f"Path : {self.path}")
