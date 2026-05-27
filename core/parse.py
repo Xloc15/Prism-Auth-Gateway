@@ -35,7 +35,11 @@ class HttpRequest:
         self.method, self.path, self.version = request_Line.split(" ")
         # Tách key và value của từng dòng Headers
         for i in range(1,len(header_Lines)):
+            if not header_Lines[i].strip():
+                continue
             pos_split = header_Lines[i].find(":")
+            if pos_split == -1:
+                continue
             key = header_Lines[i][:pos_split].lower().strip()
             value = header_Lines[i][pos_split + 1:].strip()
             self.headers[key] = value
