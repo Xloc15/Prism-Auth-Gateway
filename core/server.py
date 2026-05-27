@@ -21,7 +21,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 client_mess_string = client_mess.decode('utf-8')
                 req = HttpRequest()
                 req.parse_request(client_mess_string)
-                req.print_paresed_request()
+                req.print_parsed_request()
 
                 # Gửi message tới Client
                 time.sleep(5) #Mô phỏng thời gian Server xử lý 1 Client request
