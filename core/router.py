@@ -16,7 +16,8 @@ class Router:
         method = request_obj.method.upper()
         path = request_obj.path
         if method in self.routes_table:
-            handler_func = self.routes_table[method][path]
-            response = handler_func()
-            return response
+            if path in self.routes_table[method]:
+                handler_func = self.routes_table[method][path]
+                response = handler_func()
+                return response
         return b"HTTP/1.1 404 Not Found\r\nContent-Type: text/plain\r\n\r\n404 Resource Not Found"

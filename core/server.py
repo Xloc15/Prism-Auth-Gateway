@@ -33,7 +33,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 req.print_parsed_request()
             
                 respone_byte = router.route(req)
-                print(respone_byte.decode('utf-8'))
                 # Gửi message tới Client
                 time.sleep(5) #Mô phỏng thời gian Server xử lý 1 Client request
                 conn.sendall(respone_byte)
