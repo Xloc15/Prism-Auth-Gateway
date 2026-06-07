@@ -39,7 +39,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 else:
                     respone_byte = router.route(req)
                     # Gửi message tới Client
-                    time.sleep(3) #Mô phỏng thời gian Server xử lý 1 Client request
                     conn.sendall(respone_byte)
                     #conn.sendall(b"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nHello from Prism Auth Gateway")
     except Exception as e:      
