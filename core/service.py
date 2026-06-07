@@ -3,5 +3,6 @@ def handle_home():
 
 def handle_profile():
     return b"HTTP/1.1 200 OK\r\n\r\nThis is your Profile"
+
 def handle_login():
     return b"HTTP/1.1 200 OK\r\n\r\nStarting Login..."
